@@ -1,0 +1,99 @@
+{
+  "rules": {
+    "voting": {
+      "current": {
+        ".read": true,
+        ".write": true,
+        "status": {
+          ".validate": "newData.val() === 'waiting' || newData.val() === 'running' || newData.val() === 'round_closed' || newData.val() === 'finished'"
+        },
+        "currentRound": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "currentPosition": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "participants": {
+          "$participantId": {
+            "id": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 80"
+            },
+            "name": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30"
+            },
+            "status": {
+              ".validate": "newData.val() === 'pending' || newData.val() === 'accepted' || newData.val() === 'rejected'"
+            },
+            "joinedAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "lastSeenAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {
+              ".validate": true
+            }
+          }
+        },
+        "votes": {
+          "$round": {
+            "$voterId": {
+              "voterId": {
+                ".validate": "newData.isString() && newData.val().length > 0"
+              },
+              "voterName": {
+                ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30"
+              },
+              "selected1Id": {
+                ".validate": "newData.isString() && newData.val().length > 0"
+              },
+              "selected1Name": {
+                ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30"
+              },
+              "selected2Id": {
+                ".validate": "newData.isString() && newData.val().length > 0"
+              },
+              "selected2Name": {
+                ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30"
+              },
+              "timestamp": {
+                ".validate": "newData.isNumber()"
+              },
+              "$other": {
+                ".validate": false
+              }
+            }
+          }
+        },
+        "selectedRanking": {
+          "$position": {
+            "participantId": {
+              ".validate": "newData.isString() && newData.val().length > 0"
+            },
+            "name": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30"
+            },
+            "position": {
+              ".validate": "newData.isNumber() && newData.val() >= 1"
+            },
+            "votesReceived": {
+              ".validate": "newData.isNumber() && newData.val() >= 0"
+            },
+            "round": {
+              ".validate": "newData.isNumber() && newData.val() >= 1"
+            },
+            "selectedAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "$other": {
+          ".validate": true
+        }
+      }
+    }
+  }
+}
